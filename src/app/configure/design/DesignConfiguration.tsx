@@ -1,6 +1,7 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import React from "react";
 import NextImage from "next/image";
+import { cn } from "@/lib/utils";
 
 interface DesignConfigurationProps {
   configId: string;
@@ -28,6 +29,19 @@ export const DesignConfiguration = ({
               className="pointer-events-none z-50 select-none"
             />
           </AspectRatio>
+          <div className="absolute z-40 inset-0 left-[3px] top-px right-[3px] bottom-px rounded-[32px] shadow-[0_0_0_99999px_rgba(229, 231,235,0.6)]" />
+
+          <div
+            className={cn(
+              "absolute inset-0 left-[3px] top-px right-[3px] bottom-px rounded-[32px]",
+              `bg-zinc-950`
+            )}
+          />
+  
+        </div>
+        
+        <div className="relative w-full h-full">
+          <NextImage src={imageUrl} fill alt="your image" className="pointer-events-none"/>
         </div>
       </div>
     </div>
