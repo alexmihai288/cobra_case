@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, ChevronsUpDown } from "lucide-react";
 import { BASE_PRICE } from "@/config/products";
 import { useUploadThing } from "@/lib/uploadthing";
+import { useToast } from "@/components/ui/use-toast";
 
 interface DesignConfigurationProps {
   configId: string;
@@ -36,6 +37,7 @@ export const DesignConfiguration = ({
   imageUrl,
   imageDimensions,
 }: DesignConfigurationProps) => {
+  const { toast } = useToast();
   const [options, setOptions] = useState<{
     color: (typeof COLORS)[number];
     model: (typeof MODELS.options)[number];
@@ -107,7 +109,12 @@ export const DesignConfiguration = ({
 
       await startUpload([file], { configId });
     } catch (error) {
-      
+      toast({
+        title: "Something went wrong",
+        description:
+          "There was a problem saving your config, please try again.",
+        variant: "destructive",
+      });
     }
   }
 
