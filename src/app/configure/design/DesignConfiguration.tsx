@@ -55,7 +55,9 @@ export const DesignConfiguration = ({
         variant: "destructive",
       });
     },
-    onSuccess: () => {},
+    onSuccess: () => {
+      router.push(`/configure/preview?id=${configId}`);
+    },
   });
 
   const [options, setOptions] = useState<{
@@ -391,7 +393,15 @@ export const DesignConfiguration = ({
               </p>
 
               <Button
-                onClick={() => saveConfiguration()}
+                onClick={() =>
+                  saveConfig({
+                    configId,
+                    color: options.color.value,
+                    finish: options.finish.value,
+                    material: options.material.value,
+                    model: options.model.value,
+                  })
+                }
                 size="sm"
                 className="w-full"
               >
