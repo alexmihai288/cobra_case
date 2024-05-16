@@ -34,7 +34,7 @@ export const Phone = ({
       />
       <div className="absolute -z-10 inset-0">
         <Image
-          className="object-cover"
+          className="object-cover min-w-full min-h-full"
           src={imgSrc}
           alt="overlaying phone image"
           width={8000}

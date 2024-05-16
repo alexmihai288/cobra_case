@@ -1,10 +1,27 @@
 "use client";
+import { Phone } from "@/components/Phone";
+import { cn } from "@/lib/utils";
+import { COLORS, MODELS } from "@/validators/option-validator";
+import { Configuration } from "@prisma/client";
 import { useEffect, useState } from "react";
 import Confetti from "react-dom-confetti";
 
-export const DesignPreview = () => {
+export const DesignPreview = ({
+  configuration,
+}: {
+  configuration: Configuration;
+}) => {
   const [showConfetti, setShowConfetti] = useState(false);
   useEffect(() => setShowConfetti(true));
+
+  const { color, model } = configuration;
+  const tw = COLORS.find(
+    (supportedColor) => supportedColor.value === color
+  )?.tw;
+
+  const { label: modelLabel } = MODELS.options.find(
+    ({ value }) => value === model
+  )!;
 
   return (
     <>
@@ -18,7 +35,14 @@ export const DesignPreview = () => {
         />
       </div>
 
-      
+      <div className="mt-20 grid grid-cols-1 text-sm sm:grid-cols-12 sm:grid-rows-1 sn:gap-x-6 md:gap-x-8 lg:gap-x-12">
+        <div className="sm:col-span-4 md:col-span-3 md:row-span-2 md:row-end-2">
+          <Phone
+            className={cn(`bg-${tw}`)}
+            imgSrc={configuration.croppedImageUrl!}
+          />
+        </div>
+      </div>
     </>
   );
 };
