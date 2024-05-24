@@ -49,7 +49,20 @@ const Page = async () => {
     },
   });
 
+  const lastMonthSum = await db.order.aggregate({
+    where: {
+      isPaid: true,
+      createdAt: {
+        gte: new Date(new Date().setDate(new Date().getDate() - 30)),
+      },
+    },
+    _sum: {
+      amount: true,
+    },
+  });
+
   const WEEKLY_GOAL = 500;
+  const MONTHLY_GOAL = 2500;
 
   return (
     <div className="flex min-h-screen w-full bg-muted/40">
@@ -74,7 +87,29 @@ const Page = async () => {
                 />
               </CardFooter>
             </Card>
+            <Card>
+              <CardHeader className="pb-2">
+                <CardDescription>Last Week</CardDescription>
+                <CardTitle className="text-4xl">
+                  {formatPrice(lastMonthSum._sum.amount ?? 0)}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-sm text-muted-foreground">
+                  of {formatPrice(MONTHLY_GOAL)} goal
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Progress
+                  value={((lastMonthSum._sum.amount ?? 0) * 100) / MONTHLY_GOAL}
+                />
+              </CardFooter>
+            </Card>
           </div>
+
+          <h1 className="text-4xl font-bold tracking-tight">Incoming orders</h1>
+
+          
         </div>
       </div>
     </div>
